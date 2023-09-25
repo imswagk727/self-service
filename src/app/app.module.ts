@@ -11,6 +11,8 @@ import { IconsProviderModule } from './pages/page1/icons-provider.module';
 import { HomeComponent } from './pages/home/home.component';
 import { Page1Component } from './pages/page1/page1.component';
 import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     IconsProviderModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

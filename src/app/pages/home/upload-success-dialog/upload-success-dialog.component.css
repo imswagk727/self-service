@@ -1,0 +1,10 @@
+/* upload-success-dialog.component.css */
+
+/* Style the dialog content */
+.mat-dialog-content {
+    background-color: #ffffff; /* Background color */
+    color: #333; /* Text color */
+    border-radius: 10px; /* Corner radius */
+    padding: 20px; /* Padding */
+  }
+  

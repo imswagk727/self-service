@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Papa } from 'ngx-papaparse'; // Import PapaParse for CSV parsing
+import { MatDialog } from '@angular/material/dialog';
+import { UploadSuccessDialogComponent } from './upload-success-dialog/upload-success-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,8 @@ export class HomeComponent {
   uploadProgress: number = 0;
   csvData: { headers: string[], rows: string[][] } | null = null; // Store CSV data
 
-  constructor(private papa: Papa) {} // Inject PapaParse service
+  constructor(private papa: Papa,  private dialog: MatDialog) {} // Inject PapaParse service
+  
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] as File;
@@ -22,13 +25,25 @@ export class HomeComponent {
       return;
     }
 
+    this.openDialog();
+
     const formData = new FormData();
     formData.append('csvFile', this.selectedFile);
 
     // Implement your file upload logic here (as shown previously)
 
     // After successful upload, parse the CSV data
-    this.parseCsvData(); // Add this function
+    this.parseCsvData(); 
+  }
+
+  private openDialog(): void {
+     // Open the dialog
+     const dialogRef = this.dialog.open(UploadSuccessDialogComponent);
+
+     // You can subscribe to dialog events if needed
+     dialogRef.afterClosed().subscribe((result) => {
+       console.log('The dialog was closed');
+     });
   }
 
   private parseCsvData(): void {
