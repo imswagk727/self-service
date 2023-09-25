@@ -10,6 +10,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { IconsProviderModule } from './pages/page1/icons-provider.module';
 import { HomeComponent } from './pages/home/home.component';
 import { Page1Component } from './pages/page1/page1.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { Page1Component } from './pages/page1/page1.component';
     NzMenuModule,
     IconsProviderModule,
     BrowserAnimationsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,25 @@
-<p>home works!</p>
+<div>
+  <form #uploadForm="ngForm" (ngSubmit)="uploadFile()">
+    <input type="file" (change)="onFileSelected($event)" accept=".csv" />
+    <button type="submit" [disabled]="!selectedFile">Upload CSV</button>
+  </form>
+</div>
+
+<!-- Add the table to display CSV data -->
+<div *ngIf="csvData">
+  <h2>Preview of CSV Data</h2>
+  <table>
+    <thead>
+      <tr>
+        <!-- Add table headers based on CSV columns -->
+        <th *ngFor="let header of csvData.headers">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of csvData.rows">
+        <!-- Add table data based on CSV rows -->
+        <td *ngFor="let cell of row">{{ cell }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
