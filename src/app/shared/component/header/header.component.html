@@ -1,0 +1,22 @@
+<nz-header>
+    <div class="app-header">
+        
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+        <!-- testing toggle -->
+        <!-- <span class="header-trigger" (click)="toggleMenu()"> -->
+
+                <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+        </span>
+        <div class="newButton" >
+            <button nz-button nzType="primary">
+                <a [routerLink]="['/page1/new','info']">
+                    Some Functions
+                </a>
+            </button>
+        </div>
+        
+        <div style="position: absolute;right: 80px;top: 0;">
+            <h2>Hello, <i>name</i></h2>
+        </div>
+    </div>
+</nz-header>

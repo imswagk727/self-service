@@ -7,6 +7,8 @@ import { Page2Component } from 'src/app/modules/page2/page2.component';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 
 
@@ -21,7 +23,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     RouterModule,
     FlexLayoutModule,
-    SharedModule
+    SharedModule,
+
+    FormsModule,
+    NzLayoutModule
   ]
 })
 export class DefaultModule { }

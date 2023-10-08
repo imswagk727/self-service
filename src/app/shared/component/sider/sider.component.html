@@ -1,1 +1,21 @@
-<p>sider works!</p>
+<nz-sider class="menu-sidebar" nzCollapsible nzWidth="200px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+        <a href="/home">
+            <img src="../../../assets/logo.png" alt="logo">
+            <h1>Site Name</h1>
+        </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="true">
+        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+            <ul>
+                <li nz-menu-item nzMatchRouter>
+                    <a routerLink="/page1">Page1</a>
+                </li>
+                <li nz-menu-item nzMatchRouter>
+                    <a routerLink="/page2">Page2</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nz-sider>
