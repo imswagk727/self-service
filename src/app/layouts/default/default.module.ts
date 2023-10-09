@@ -15,7 +15,6 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 @NgModule({
   declarations: [
     DefaultComponent,
-    HomeComponent,
     Page1Component,
     Page2Component
   ],

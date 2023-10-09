@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.app-layout {
+  min-height: 100vh;
+}
+
+nz-content {
+  margin: 24px 16px 24px;
+  overflow: initial;
+}
+
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  overflow: initial;
+}
+
+
+
+.highlight {
+  background-color: lightgray;
+}
+
