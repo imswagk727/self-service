@@ -16,8 +16,8 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule,
     
+    FormsModule,
     NzLayoutModule
   ]
 })
