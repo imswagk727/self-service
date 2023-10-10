@@ -1,25 +1,10 @@
-<div>
-  <form #uploadForm="ngForm" (ngSubmit)="uploadFile()">
-    <input type="file" (change)="onFileSelected($event)" accept=".csv" />
-    <button type="submit" [disabled]="!selectedFile">Upload CSV</button>
-  </form>
-</div>
-
-<!-- Add the table to display CSV data -->
-<div *ngIf="csvData">
-  <h2>Preview of CSV Data</h2>
-  <table>
-    <thead>
-      <tr>
-        <!-- Add table headers based on CSV columns -->
-        <th *ngFor="let header of csvData.headers">{{ header }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of csvData.rows">
-        <!-- Add table data based on CSV rows -->
-        <td *ngFor="let cell of row">{{ cell }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<nz-upload
+      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      [nzHeaders]="{ authorization: 'authorization-text' }"
+      (nzChange)="handleChange($event)"
+    >
+      <button nz-button>
+        <span nz-icon nzType="upload"></span>
+        Click to Upload
+      </button>
+    </nz-upload>

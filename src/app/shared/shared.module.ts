@@ -10,7 +10,6 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { IconsProviderModule } from '../pages/page1/icons-provider.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
@@ -32,7 +31,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzMenuModule,
     IconsProviderModule,
     BrowserAnimationsModule,
-    MatDialogModule,
+    
     
   ],
   exports: [
