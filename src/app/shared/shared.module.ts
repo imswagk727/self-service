@@ -8,7 +8,7 @@ import { HeaderComponent } from './component/header/header.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { IconsProviderModule } from '../modules/page1/icons-provider.module';
+import { IconsProviderModule } from '../pages/page1/icons-provider.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NzIconModule } from 'ng-zorro-antd/icon';
