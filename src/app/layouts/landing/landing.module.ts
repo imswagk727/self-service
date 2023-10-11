@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     NzLayoutModule,
     NzUploadModule,
     NzTableModule,
+    NzDividerModule
   ]
 })
 export class LandingModule { }

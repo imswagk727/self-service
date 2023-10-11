@@ -5,10 +5,9 @@
   </form>
 </div>
 
-
 <div *ngIf="csvData">
-  <h2>Preview of CSV Data</h2>
-  <nz-table nzShowSizeChanger [nzData]="csvData.rows" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" [nzNoResult]="'Empty Data Entry'" >
+  <nz-divider nzText="Data Preview"></nz-divider>
+  <nz-table nzShowSizeChanger [nzTitle]="titleText" [nzData]="csvData.rows" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" [nzNoResult]="'Empty Data Entry'">
     <thead>
       <tr>
         <!-- Add table headers based on CSV columns -->

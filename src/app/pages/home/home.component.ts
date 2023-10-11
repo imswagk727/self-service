@@ -13,6 +13,8 @@ export class HomeComponent {
   // Define pageIndex and pageSize properties for pagination
   pageIndex = 1;
   pageSize = 10;
+  totalItems = 0; 
+  titleText: string = "";
 
   constructor(private csvPaserService: CsvParserService) {} // Inject PapaParse service
   
@@ -38,12 +40,13 @@ export class HomeComponent {
     // Implement file upload logic here
 
     // After successful upload, parse the CSV data
-    this.csvPaserService.getParsedData; 
+    this.csvPaserService.parseCsvFile(this.selectedFile);
 
     // Subscribe to the parsing completion event
-    this.csvPaserService.parseCsvFile(this.selectedFile);
     this.csvPaserService.getParsedData().subscribe((data) => {
       this.csvData = data;
+      this.totalItems = this.csvData?.rows.length || 0; // Set totalItems
+      this.titleText = `(Total Rows: ${this.totalItems})`;
     });
   }
 
