@@ -4,17 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CsvDataService {
+  private csvData: any[] = [];
 
   constructor() { }
 
-  private csvData: any[] = [];
-
-  setCsvData(data: any[]): void {
+  setCSVData(data: any[]) {
     this.csvData = data;
   }
 
-  getCsvData(): any[] {
+  getCSVData() {
     return this.csvData;
   }
-  
 }

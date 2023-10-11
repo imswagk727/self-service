@@ -5,10 +5,10 @@
   </form>
 </div>
 
-<!-- Add the table to display CSV data -->
+
 <div *ngIf="csvData">
   <h2>Preview of CSV Data</h2>
-  <table>
+  <nz-table [nzData]="csvData.rows" [nzNoResult]="'Empty Data Entry'" >
     <thead>
       <tr>
         <!-- Add table headers based on CSV columns -->
@@ -21,5 +21,5 @@
         <td *ngFor="let cell of row">{{ cell }}</td>
       </tr>
     </tbody>
-  </table>
+  </nz-table>
 </div>
