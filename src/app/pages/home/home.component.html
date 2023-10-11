@@ -8,7 +8,7 @@
 
 <div *ngIf="csvData">
   <h2>Preview of CSV Data</h2>
-  <nz-table [nzData]="csvData.rows" [nzNoResult]="'Empty Data Entry'" >
+  <nz-table nzShowSizeChanger [nzData]="csvData.rows" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" [nzNoResult]="'Empty Data Entry'" >
     <thead>
       <tr>
         <!-- Add table headers based on CSV columns -->
@@ -16,10 +16,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of csvData.rows">
+      <tr *ngFor="let row of visibleRows">
         <!-- Add table data based on CSV rows -->
         <td *ngFor="let cell of row">{{ cell }}</td>
-      </tr>
+      </tr>      
     </tbody>
   </nz-table>
 </div>

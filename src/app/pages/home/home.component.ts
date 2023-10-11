@@ -10,8 +10,18 @@ export class HomeComponent {
   selectedFile: File | null = null;
   csvData: { headers: string[], rows: string[][] } | null = null; // Store CSV data
 
+  // Define pageIndex and pageSize properties for pagination
+  pageIndex = 1;
+  pageSize = 10;
+
   constructor(private csvPaserService: CsvParserService) {} // Inject PapaParse service
   
+
+  get visibleRows() {
+    const start = (this.pageIndex - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.csvData!.rows.slice(start, end);
+  }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0] as File;
