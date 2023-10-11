@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Papa } from 'ngx-papaparse'; // Import PapaParse for CSV parsing
+import { CsvParserService } from 'src/app/shared/service/csv-parser.service';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +8,9 @@ import { Papa } from 'ngx-papaparse'; // Import PapaParse for CSV parsing
 })
 export class HomeComponent {
   selectedFile: File | null = null;
-  uploadProgress: number = 0;
   csvData: { headers: string[], rows: string[][] } | null = null; // Store CSV data
 
-  constructor(private papa: Papa) {} // Inject PapaParse service
+  constructor(private csvPaserService: CsvParserService) {} // Inject PapaParse service
   
 
   onFileSelected(event: any): void {
@@ -23,39 +22,21 @@ export class HomeComponent {
       return;
     }
 
-
     const formData = new FormData();
     formData.append('csvFile', this.selectedFile);
 
-    // Implement your file upload logic here (as shown previously)
+    // Implement file upload logic here
 
     // After successful upload, parse the CSV data
-    this.parseCsvData(); 
-  }
+    this.csvPaserService.getParsedData; 
 
-
-  private parseCsvData(): void {
-    // Ensure selectedFile is not null
-    if (!this.selectedFile) {
-      console.error('No file selected.');
-      return;
-    }
-  
-    // Parse CSV data using PapaParse
-    this.papa.parse(this.selectedFile, {
-      header: true, // Treat the first row as headers
-      skipEmptyLines: true, // Skip empty lines
-      complete: (result) => {
-        // Store the parsed data in csvData
-        this.csvData = {
-          headers: result.meta.fields,
-          rows: result.data.map((row: any) => Object.values(row)),
-        };
-      },
-      error: (error) => {
-        console.error('CSV parsing error:', error);
-      },
+    // Subscribe to the parsing completion event
+    this.csvPaserService.parseCsvFile(this.selectedFile);
+    this.csvPaserService.getParsedData().subscribe((data) => {
+      this.csvData = data;
     });
   }
+
+
   
 }
