@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CsvParserService } from 'src/app/shared/service/csv-parser.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent {
   totalItems = 0; 
   titleText: string = "";
 
-  constructor(private csvPaserService: CsvParserService) {} // Inject PapaParse service
+  constructor(private csvPaserService: CsvParserService, private router: Router) {} // Inject PapaParse service
   
 
   get visibleRows() {
@@ -48,6 +49,10 @@ export class HomeComponent {
       this.totalItems = this.csvData?.rows.length || 0; // Set totalItems
       this.titleText = `(Total Rows: ${this.totalItems})`;
     });
+  }
+
+  startAnalysis() {
+    this.router.navigate(['/page1']);
   }
 
 
