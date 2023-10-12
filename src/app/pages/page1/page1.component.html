@@ -1,1 +1,17 @@
 <p>page1 works!</p>
+
+<div *ngIf="csvData">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let header of csvData.headers">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of csvData.rows[0]">
+        <td>{{ row }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

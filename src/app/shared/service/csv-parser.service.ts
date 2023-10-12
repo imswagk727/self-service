@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Papa } from 'ngx-papaparse';
 import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CsvParserService {
-  private parsedDataSubject = new Subject<{ headers: string[], rows: string[][] } | null>();
+  private parsedDataSubject = new Subject<{
+    headers: string[];
+    rows: string[][];
+  } | null>();
 
   constructor(private papa: Papa) {}
 
@@ -28,7 +32,11 @@ export class CsvParserService {
     });
   }
 
-  getParsedData(): Observable<{ headers: string[], rows: string[][] } | null> {
-    return this.parsedDataSubject.asObservable();
+  getParsedData(): Observable<{ headers: string[]; rows: string[][] } | null> {
+    return this.parsedDataSubject.asObservable().pipe(
+      tap((data) => {
+        console.log('Data received from getParsedData():', data);
+      })
+    );
   }
 }
