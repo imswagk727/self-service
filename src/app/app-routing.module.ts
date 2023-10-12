@@ -6,32 +6,39 @@ import { Page2Component } from './pages/page2/page2.component';
 import { DefaultComponent } from './layouts/default/default.component';
 import { LandingComponent } from './layouts/landing/landing.component';
 
-const routes: Routes = [{
-  path: '',
-  component: DefaultComponent,
-  children: [{
+const routes: Routes = [
+  {
     path: '',
-    component: HomeComponent
-  }, {
-    path: 'page1',
-    component: Page1Component
-  }, {
-    path: 'page2',
-    component: Page2Component
-  }]
-},{
-  path: '',
-  component: LandingComponent,
-  children: [
-    {
-      path: 'home',
-      component: HomeComponent
-    }
-  ]
-}];
+    component: LandingComponent, //set layout for component
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'home',
+        component: HomeComponent,
+      },
+    ],
+  },
+  {
+    path: '',
+    component: DefaultComponent, //set layout for component
+    children: [
+      {
+        path: 'page1',
+        component: Page1Component,
+      },
+      {
+        path: 'page2',
+        component: Page2Component,
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
