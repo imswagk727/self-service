@@ -26,3 +26,8 @@
     <button nz-button nzType="primary" nzShape="round" (click)="startAnalysis()">Start Analysis</button>
   </div>
 </div>
+
+<div *ngIf="!csvData">
+  <nz-divider nzText="Data Preview"></nz-divider>
+  <nz-empty></nz-empty>
+</div>

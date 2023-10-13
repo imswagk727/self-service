@@ -6,7 +6,9 @@ import { Page2Component } from 'src/app/pages/page2/page2.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
-
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,9 +20,12 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     
     SharedModule,
-    NzLayoutModule
+    NzLayoutModule,
+    NzCardModule,
+    NzSelectModule
   ]
 })
 export class DefaultModule { }

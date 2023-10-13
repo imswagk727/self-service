@@ -1,4 +1,4 @@
-<p>page1 works!</p>
+<!-- <p>page1 works!</p>
 
 <div *ngIf="csvData">
   <table>
@@ -15,3 +15,71 @@
   </table>
 </div>
 
+ -->
+
+<nz-card nzTitle="1.Data selection">
+  <p
+    style="
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.85);
+      margin-bottom: 16px;
+      font-weight: 500;
+    "
+  >
+    Group title
+  </p>
+  <nz-card nzType="inner" nzTitle="1.1 Select Data">
+    <div nz-description>
+      Data selection is a crucial step in any data analysis process. The choice
+      of variables can significantly impact the quality of your insights and the
+      validity of your conclusions. <br />
+      In this section, you will select X (independent) and Y (dependent)
+      variables for your analysis.
+    </div>
+    <br />
+    <p style="color: #999">
+      - Please select columns/column names you are interested <br />
+      - you can select multiple feature variables and only one target variable
+    </p>
+    <div class="innerContent">
+      <!-- feature -->
+      <div class="selection-box">
+        <p>Select Feature variables</p>
+        <nz-select
+          nzMode="multiple"
+          nzPlaceHolder="Nothing selected"
+          [(ngModel)]="listOfSelectedFeatureVariables"
+          nzAllowClear
+          (ngModelChange)="resetTargetIfMatch()"
+        >
+          <nz-option
+            *ngFor="let item of listOfOption"
+            [nzLabel]="item"
+            [nzValue]="item"
+          ></nz-option>
+        </nz-select>      
+      </div>
+
+      <!-- target -->
+      <div class="selection-box">
+        <p>Select Target variables</p>
+        <nz-select
+          nzPlaceHolder="Nothing selected"
+          [(ngModel)]="listOfselectedTargetVariable"
+          nzAllowClear
+        >
+          <nz-option
+            *ngFor="let item of listOfOption"
+            [nzLabel]="item"
+            [nzValue]="item"
+            [nzDisabled]="listOfSelectedFeatureVariables.includes(item)"
+          ></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </nz-card>
+
+  <nz-card nzType="inner" style="margin-top: 16px" nzTitle="1.2 Filter Data">
+    <a>Inner Card Content</a>
+  </nz-card>
+</nz-card>

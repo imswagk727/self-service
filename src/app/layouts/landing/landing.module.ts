@@ -9,6 +9,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzUploadModule,
     NzTableModule,
     NzDividerModule,
-    NzButtonModule
+    NzButtonModule,
+    NzEmptyModule
   ]
 })
 export class LandingModule { }
