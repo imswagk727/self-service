@@ -21,11 +21,10 @@ export class Page1Component implements OnInit {
     // Access CSV data from the SharedService
     this.csvData = this.csvDataService.getCSVData();
 
-    const children: string[] = [];
-    for (let i = 10; i < 36; i++) {
-      children.push(`${i.toString(36)}${i}`);
+    // 初始化 listOfOption 为 csvData 的 headers
+    if (this.csvData && this.csvData.headers) {
+      this.listOfOption = this.csvData.headers;
     }
-    this.listOfOption = children;
   }
 
   // Reset the target variable if it matches any selected feature variable
