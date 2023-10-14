@@ -12,6 +12,9 @@ export class Page1Component implements OnInit {
   listOfOption: string[] = [];
   listOfSelectedFeatureVariables: string[] = [];
   listOfselectedTargetVariable: string | null = null;
+  listOfOperator: string[] = ['>', '<', '=', '!='];
+  filterGroups: any[] = [];
+
 
   constructor(private csvDataService: CsvDataService) {
     console.log('CsvDataService injected');
@@ -32,6 +35,11 @@ export class Page1Component implements OnInit {
     if (this.listOfselectedTargetVariable && this.listOfSelectedFeatureVariables.includes(this.listOfselectedTargetVariable)) {
       this.listOfselectedTargetVariable = null;
     }
+  }
+
+  addFilterGroup() {
+    // add new a new filter to filterGroup
+    this.filterGroups.push({});
   }
 
 }

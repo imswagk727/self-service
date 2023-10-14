@@ -17,6 +17,7 @@
 
  -->
 
+<!-- Section 1 -->
 <nz-card nzTitle="1.Data selection">
   <p
     style="
@@ -28,8 +29,10 @@
   >
     Group title
   </p>
+
+  <!-- Section 1.1 -->
   <nz-card nzType="inner" nzTitle="1.1 Select Data">
-    <div nz-description>
+    <div class="card-description">
       Data selection is a crucial step in any data analysis process. The choice
       of variables can significantly impact the quality of your insights and the
       validity of your conclusions. <br />
@@ -57,7 +60,7 @@
             [nzLabel]="item"
             [nzValue]="item"
           ></nz-option>
-        </nz-select>      
+        </nz-select>
       </div>
 
       <!-- target -->
@@ -79,7 +82,71 @@
     </div>
   </nz-card>
 
+  <!-- Section 1.2 -->
   <nz-card nzType="inner" style="margin-top: 16px" nzTitle="1.2 Filter Data">
-    <a>Inner Card Content</a>
+    <div class="card-description">
+      Data filtration is an essential step in the data analysis process.
+    </div>
+    <button
+      style="margin-top: 16px"
+      nz-button
+      nzType="primary"
+      (click)="addFilterGroup()"
+    >
+      Add filter
+    </button>
+    <div *ngFor="let group of filterGroups">
+      <div class="innerContent">
+        <!-- column -->
+        <div class="selection-box">
+          <p>Select column name</p>
+          <nz-select
+            nzMode="multiple"
+            nzPlaceHolder="Nothing selected"
+            [(ngModel)]="listOfSelectedFeatureVariables"
+            nzAllowClear
+            (ngModelChange)="resetTargetIfMatch()"
+          >
+            <nz-option
+              *ngFor="let item of listOfOption"
+              [nzLabel]="item"
+              [nzValue]="item"
+            ></nz-option>
+          </nz-select>
+        </div>
+
+        <!-- operator -->
+        <div class="selection-box">
+          <p>Select operator</p>
+          <nz-select
+            nzPlaceHolder="Nothing selected"
+            [(ngModel)]="listOfselectedTargetVariable"
+            nzAllowClear
+          >
+            <nz-option
+              *ngFor="let item of listOfOperator"
+              [nzLabel]="item"
+              [nzValue]="item"
+            ></nz-option>
+          </nz-select>
+        </div>
+
+        <!-- value -->
+        <div class="selection-box">
+          <p>Select value</p>
+          <nz-select
+            nzPlaceHolder="Nothing selected"
+            [(ngModel)]="listOfselectedTargetVariable"
+            nzAllowClear
+          >
+            <nz-option
+              *ngFor="let item of listOfOption"
+              [nzLabel]="item"
+              [nzValue]="item"
+            ></nz-option>
+          </nz-select>
+        </div>
+      </div>
+    </div>
   </nz-card>
 </nz-card>
