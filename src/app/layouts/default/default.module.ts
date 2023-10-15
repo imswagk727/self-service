@@ -10,13 +10,14 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-
+import { UniqueValuesPipe } from 'src/app/pages/page1/unique-values.pipe';
 
 @NgModule({
   declarations: [
     DefaultComponent,
     Page1Component,
-    Page2Component
+    Page2Component,
+    UniqueValuesPipe
   ],
   imports: [
     CommonModule,

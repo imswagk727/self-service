@@ -95,20 +95,19 @@
     >
       Add filter
     </button>
-    <div *ngFor="let group of filterGroups">
+    <div *ngFor="let group of filterGroups; let i = index">
       <div class="innerContent">
         <!-- column -->
         <div class="selection-box">
           <p>Select column name</p>
           <nz-select
-            nzMode="multiple"
             nzPlaceHolder="Nothing selected"
-            [(ngModel)]="listOfSelectedFeatureVariables"
+            [(ngModel)]="group.listOfSelectedFilterColumn"
             nzAllowClear
-            (ngModelChange)="resetTargetIfMatch()"
+            (ngModelChange)="resetTargetIfMatch(); updateSelectedFilterValue(i)"
           >
             <nz-option
-              *ngFor="let item of listOfOption"
+              *ngFor="let item of listOfFilterColumns"
               [nzLabel]="item"
               [nzValue]="item"
             ></nz-option>
@@ -120,8 +119,8 @@
           <p>Select operator</p>
           <nz-select
             nzPlaceHolder="Nothing selected"
-            [(ngModel)]="listOfselectedTargetVariable"
             nzAllowClear
+            [(ngModel)]="group.listOfSelectedOperator"
           >
             <nz-option
               *ngFor="let item of listOfOperator"
@@ -136,11 +135,10 @@
           <p>Select value</p>
           <nz-select
             nzPlaceHolder="Nothing selected"
-            [(ngModel)]="listOfselectedTargetVariable"
             nzAllowClear
           >
             <nz-option
-              *ngFor="let item of listOfOption"
+              *ngFor="let item of group.listOfSelectedFilterValue | uniqueValues"
               [nzLabel]="item"
               [nzValue]="item"
             ></nz-option>
