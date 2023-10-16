@@ -15,7 +15,6 @@ export class Page1Component implements OnInit {
   listOfselectedTargetVariable: string | null = null;
 
   // 1.2 data filteration
-  listOfFilterColumns: string[] = []; // filter column name 
   listOfOperator: string[] = ['>', '<', '=', '!=']; // filter operator
 
   filterGroups: {  //
@@ -40,11 +39,6 @@ export class Page1Component implements OnInit {
       this.listOfOption = this.csvData.headers;
     }
 
-    // init listOfFilter
-    if (this.csvData && this.csvData.headers) {
-      this.listOfFilterColumns = this.csvData.headers;
-    }
-
   }
 
   // Reset the target variable if it matches any selected feature variable
@@ -54,6 +48,15 @@ export class Page1Component implements OnInit {
     }
   }
 
+  // filter column name
+  get combinedFeatureAndTargetVariables(): string[] {
+    const combinedVariables = [...this.listOfSelectedFeatureVariables];
+    if (this.listOfselectedTargetVariable) {
+      combinedVariables.push(this.listOfselectedTargetVariable);
+    }
+    return combinedVariables;
+  }
+
   // add new filter group
   addFilterGroup() {
     this.filterGroups.push({
@@ -61,6 +64,11 @@ export class Page1Component implements OnInit {
       listOfSelectedOperator: '',
       listOfSelectedFilterValue: [],
     });
+  }
+
+  // remove a filter
+  removeFilterGroup(index: number) {
+    this.filterGroups.splice(index, 1);
   }
 
   // 更新 selected fitler value
@@ -89,5 +97,7 @@ export class Page1Component implements OnInit {
   
     group.listOfSelectedFilterValue = selectedValues;
   }
+
+  
   
 }

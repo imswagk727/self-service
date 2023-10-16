@@ -108,7 +108,7 @@
             (ngModelChange)="resetTargetIfMatch(); updateSelectedFilterValue(i)"
           >
             <nz-option
-              *ngFor="let item of listOfFilterColumns"
+              *ngFor="let item of combinedFeatureAndTargetVariables"
               [nzLabel]="item"
               [nzValue]="item"
             ></nz-option>
@@ -134,17 +134,19 @@
         <!-- value -->
         <div class="selection-box">
           <p>Select value</p>
-          <nz-select
-            nzPlaceHolder="Nothing selected"
-            nzAllowClear
-          >
+          <nz-select nzPlaceHolder="Nothing selected" nzAllowClear>
             <nz-option
-              *ngFor="let item of group.listOfSelectedFilterValue | uniqueValues"
+              *ngFor="
+                let item of group.listOfSelectedFilterValue | uniqueValues
+              "
               [nzLabel]="item"
               [nzValue]="item"
             ></nz-option>
           </nz-select>
         </div>
+        <button nz-button nzType="default" (click)="removeFilterGroup(i)">
+          Remove
+        </button>
       </div>
     </div>
   </nz-card>
