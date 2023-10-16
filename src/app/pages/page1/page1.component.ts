@@ -29,7 +29,6 @@ export class Page1Component implements OnInit {
 
   constructor(private csvDataService: CsvDataService) {
     console.log('CsvDataService injected');
-    this.addFilterGroup();  // init filter group
   }
 
   ngOnInit() {

@@ -92,6 +92,7 @@
       nz-button
       nzType="primary"
       (click)="addFilterGroup()"
+      [disabled]="listOfSelectedFeatureVariables.length === 0"
     >
       Add filter
     </button>
