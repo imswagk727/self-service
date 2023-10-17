@@ -16,14 +16,19 @@ export class Page1Component implements OnInit {
 
   // 1.2 data filteration
   listOfOperator: string[] = ['>', '<', '=', '!=']; // filter operator
+  listOfOperatorNumeical: string[] = ['>', '<', '=', '!=']; // filter operator
+  listOfOperatorCategorical: string[] = ['=', '!='];
 
   filterGroups: {  //
     listOfSelectedFilterColumn: string; // selected column
     listOfSelectedOperator: string; // selected operator
     listOfSelectedFilterValue: any[]; // selected value
+    isNumber: boolean;
+    isDiverseNumber: boolean;
   }[] = [];
   
-  
+  // isNumber: boolean = false;
+  // isDiverseNumber: boolean =false;
 
 
   constructor(private csvDataService: CsvDataService) {
@@ -63,6 +68,8 @@ export class Page1Component implements OnInit {
       listOfSelectedFilterColumn: '', 
       listOfSelectedOperator: '',
       listOfSelectedFilterValue: [],
+      isNumber: false,
+      isDiverseNumber: false
     });
   }
 
@@ -96,8 +103,30 @@ export class Page1Component implements OnInit {
     }
   
     group.listOfSelectedFilterValue = selectedValues;
+    console.log('data column:', group.listOfSelectedFilterColumn)
+    console.log('data value:',  group.listOfSelectedFilterValue)
+    group.isNumber = this.isNumeric(group.listOfSelectedFilterValue)
+    group.isDiverseNumber = this.hasMoreThanFiveUniqueNumbers(group.listOfSelectedFilterValue)
+    console.log('isNumber:', group.isNumber)
+    console.log('isDiverseNumber:', group.isDiverseNumber)
   }
 
+
+  isNumeric(columnData: string[]) :boolean{
+    return columnData.every(value => !isNaN(parseFloat(value)));
+  }
   
+  hasMoreThanFiveUniqueNumbers(columnData: string[]) :boolean {
+    const uniqueNumbers = new Set();
   
+    for (const value of columnData) {
+      if (!isNaN(parseFloat(value))) {
+        uniqueNumbers.add(parseFloat(value));
+        if (uniqueNumbers.size > 5) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }

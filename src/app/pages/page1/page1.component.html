@@ -123,18 +123,32 @@
             nzAllowClear
             [(ngModel)]="group.listOfSelectedOperator"
           >
-            <nz-option
-              *ngFor="let item of listOfOperator"
-              [nzLabel]="item"
-              [nzValue]="item"
-            ></nz-option>
+            <div *ngIf="group.isNumber; else cagtegorical">
+              <nz-option
+                *ngFor="let item of listOfOperatorNumeical"
+                [nzLabel]="item"
+                [nzValue]="item"
+              ></nz-option>
+            </div>
+            <ng-template #cagtegorical>
+              <nz-option
+                *ngFor="let item of listOfOperatorCategorical"
+                [nzLabel]="item"
+                [nzValue]="item"
+              ></nz-option>
+            </ng-template>
           </nz-select>
         </div>
 
         <!-- value -->
         <div class="selection-box">
           <p>Select value</p>
-          <nz-select nzPlaceHolder="Nothing selected" nzAllowClear>
+          <nz-select
+            nzMode="multiple"
+            nzShowSearch
+            nzPlaceHolder="Nothing selected"
+            nzAllowClear
+          >
             <nz-option
               *ngFor="
                 let item of group.listOfSelectedFilterValue | uniqueValues
@@ -143,6 +157,9 @@
               [nzValue]="item"
             ></nz-option>
           </nz-select>
+          <!-- <div *ngIf="isNumber">
+            <input nz-input placeholder="input a value" type="number" />
+          </div> -->
         </div>
         <button nz-button nzType="default" (click)="removeFilterGroup(i)">
           Remove
