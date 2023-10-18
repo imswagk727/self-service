@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { UniqueValuesPipe } from 'src/app/pages/page1/unique-values.pipe';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzTableModule } from 'ng-zorro-antd/table';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzCardModule,
     NzSelectModule,
     NzButtonModule,
-    NzInputModule
+    NzInputModule,
+    NzSwitchModule,
+    NzTableModule
   ]
 })
 export class DefaultModule { }

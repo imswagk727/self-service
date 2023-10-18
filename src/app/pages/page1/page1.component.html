@@ -193,4 +193,24 @@
       </div>
     </div>
   </nz-card>
+  <!-- display data -->
+  <div class="displayDataContainer" style="margin-top: 16px">
+    <nz-switch [(ngModel)]="isTableVisible" nzCheckedChildren="Show" nzUnCheckedChildren="Close"></nz-switch>
+    <nz-table [nzTitle]="'Filtered data'" nzSize="small" [nzData]="data" *ngIf="isTableVisible">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of data">
+          <td>{{ data.name }}</td>
+          <td>{{ data.age }}</td>
+          <td>{{ data.address }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
 </nz-card>
