@@ -30,8 +30,6 @@ export class Page1Component implements OnInit {
     maxValue: number | null;
   }[] = [];
 
-  // isNumber: boolean = false;
-  // isDiverseNumber: boolean =false;
 
   constructor(private csvDataService: CsvDataService) {
     console.log('CsvDataService injected');
@@ -92,23 +90,8 @@ export class Page1Component implements OnInit {
     // 获取当前所选列名
     const selectedColumn = group.listOfSelectedFilterColumn;
 
-    // 初始化结果数组
-    const selectedValues: any[] = [];
-
-    // 检查所选列名是否为空
-    if (selectedColumn && typeof selectedColumn === 'string') {
-      // 在数据源中查找与所选列名匹配的数据行
-      if (this.csvData && this.csvData.headers && this.csvData.rows) {
-        const columnIndex = this.csvData.headers.indexOf(selectedColumn);
-
-        if (columnIndex !== -1) {
-          // 使用数组映射（map）来获取所选列的所有数据行
-          this.csvData.rows.forEach((row) => {
-            selectedValues.push(row[columnIndex]);
-          });
-        }
-      }
-    }
+    // 结果数组
+    const selectedValues = this.getColumnValues(selectedColumn);
 
     group.listOfSelectedFilterValue = selectedValues;
     console.log('data column:', group.listOfSelectedFilterColumn);
@@ -134,6 +117,10 @@ export class Page1Component implements OnInit {
     }
     console.log('Min:', group.minValue);
     console.log('Max:', group.maxValue);
+
+    console.log('combined column',this.combinedFeatureAndTargetVariables)
+    console.log('Combined Value',this.getColumnValuesForMultipleColumns(this.combinedFeatureAndTargetVariables))
+
   }
 
   isNumeric(columnData: string[]): boolean {
@@ -153,6 +140,62 @@ export class Page1Component implements OnInit {
     }
     return false;
   }
+
+  getColumnValues(columnName: string): any[] {
+    const values: any[] = [];
+  
+    // 检查所选列名是否为空
+    if (columnName && typeof columnName === 'string') {
+      // 在数据源中查找与所选列名匹配的数据行
+      if (this.csvData && this.csvData.headers && this.csvData.rows) {
+        const columnIndex = this.csvData.headers.indexOf(columnName);
+  
+        if (columnIndex !== -1) {
+          // 使用数组映射（map）来获取所选列的所有数据行
+          this.csvData.rows.forEach((row) => {
+            values.push(row[columnIndex]);
+          });
+        }
+      }
+    }
+  
+    return values;
+  }
+
+  // getColumnValuesForMultipleColumns(columnNames: string[]): { [key: string]: any[] } {
+  //   // object: key-value pair
+  //   const result: { [key: string]: any[] } = {};
+  
+  //   for (const columnName of columnNames) {
+  //     const values = this.getColumnValues(columnName);
+  //     result[columnName] = values;
+  //   }
+
+  //   return result;
+  // }
+
+  getColumnValuesForMultipleColumns(columnNames: string[]): { headers: string[], rows: any[][] } {
+    // csv data format
+    const result: { headers: string[], rows: any[][] } = {
+      headers: [],
+      rows: []
+    };
+  
+    result.headers = columnNames;
+  
+    for (const columnName of columnNames) {
+      const values = this.getColumnValues(columnName);
+      result.rows.push(values);
+    }
+  
+    return result;
+  }
+  filteredData = this.getColumnValuesForMultipleColumns(this.combinedFeatureAndTargetVariables)
+  
+  
+  
+  
+  
 
   isTableVisible = false; 
   data = [
