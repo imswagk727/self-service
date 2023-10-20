@@ -14,7 +14,7 @@ import { UniqueValuesPipe } from 'src/app/pages/page1/unique-values.pipe';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
-
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     NzButtonModule,
     NzInputModule,
     NzSwitchModule,
-    NzTableModule
+    NzTableModule,
+    NzToolTipModule
   ]
 })
 export class DefaultModule { }

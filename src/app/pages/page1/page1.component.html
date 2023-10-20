@@ -53,7 +53,7 @@
           nzPlaceHolder="Nothing selected"
           [(ngModel)]="listOfSelectedFeatureVariables"
           nzAllowClear
-          (ngModelChange)="resetTargetIfMatch()"
+          (ngModelChange)="resetTargetIfMatch(); updateSelectVariable()"
         >
           <nz-option
             *ngFor="let item of listOfOption"
@@ -70,6 +70,7 @@
           nzPlaceHolder="Nothing selected"
           [(ngModel)]="listOfselectedTargetVariable"
           nzAllowClear
+          (ngModelChange)="updateSelectVariable()"
         >
           <nz-option
             *ngFor="let item of listOfOption"
@@ -93,6 +94,12 @@
       nzType="primary"
       (click)="addFilterGroup()"
       [disabled]="listOfSelectedFeatureVariables.length === 0"
+      [nzTooltipTitle]="
+        filteredData.headers.length === 0 ? 'No variable selected' : ''
+      "
+      nzTooltipPlacement="topLeft"
+      [nzTooltipColor]="'red'"
+      nz-tooltip
     >
       Add filter
     </button>
@@ -195,20 +202,35 @@
   </nz-card>
   <!-- display data -->
   <div class="displayDataContainer" style="margin-top: 16px">
-    <nz-switch [(ngModel)]="isTableVisible" nzCheckedChildren="Show" nzUnCheckedChildren="Close"></nz-switch>
-    <nz-table [nzTitle]="'Filtered data'" nzSize="small" [nzData]="data" *ngIf="isTableVisible">
+    <nz-switch
+      [(ngModel)]="isTableVisible"
+      [nzDisabled]="filteredData.headers.length === 0"
+      nzCheckedChildren="Show Filtered Data"
+      nzUnCheckedChildren="Close Filtered Data"
+      [nzTooltipTitle]="
+        filteredData.headers.length === 0 ? 'No variable selected' : ''
+      "
+      nzTooltipPlacement="topLeft"
+      [nzTooltipColor]="'red'"
+      nz-tooltip
+    >
+    </nz-switch>
+    <nz-table
+      nzShowSizeChanger
+      nzSize="small"
+      [nzData]="filteredData.rows"
+      *ngIf="isTableVisible"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+    >
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Address</th>
+          <th *ngFor="let header of filteredData.headers">{{ header }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of data">
-          <td>{{ data.name }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
+        <tr *ngFor="let row of visibleRows">
+          <td *ngFor="let cell of row">{{ cell }}</td>
         </tr>
       </tbody>
     </nz-table>

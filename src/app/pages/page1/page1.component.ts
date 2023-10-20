@@ -30,6 +30,10 @@ export class Page1Component implements OnInit {
     maxValue: number | null;
   }[] = [];
 
+  isTableVisible = false;
+  filteredData: { headers: string[], rows: any[][] } = { headers: [], rows: [] };
+  pageIndex = 1;
+  pageSize = 10;
 
   constructor(private csvDataService: CsvDataService) {
     console.log('CsvDataService injected');
@@ -118,9 +122,12 @@ export class Page1Component implements OnInit {
     console.log('Min:', group.minValue);
     console.log('Max:', group.maxValue);
 
-    console.log('combined column',this.combinedFeatureAndTargetVariables)
-    console.log('Combined Value',this.getColumnValuesForMultipleColumns(this.combinedFeatureAndTargetVariables))
+  }
 
+  updateSelectVariable(): void {
+    this.filteredData = this.getColumnValuesForMultipleColumns(this.combinedFeatureAndTargetVariables);
+    console.log('combined column', this.combinedFeatureAndTargetVariables)
+    console.log('combined value', this.filteredData);
   }
 
   isNumeric(columnData: string[]): boolean {
@@ -143,13 +150,13 @@ export class Page1Component implements OnInit {
 
   getColumnValues(columnName: string): any[] {
     const values: any[] = [];
-  
+
     // 检查所选列名是否为空
     if (columnName && typeof columnName === 'string') {
       // 在数据源中查找与所选列名匹配的数据行
       if (this.csvData && this.csvData.headers && this.csvData.rows) {
         const columnIndex = this.csvData.headers.indexOf(columnName);
-  
+
         if (columnIndex !== -1) {
           // 使用数组映射（map）来获取所选列的所有数据行
           this.csvData.rows.forEach((row) => {
@@ -158,14 +165,14 @@ export class Page1Component implements OnInit {
         }
       }
     }
-  
+
     return values;
   }
 
   // getColumnValuesForMultipleColumns(columnNames: string[]): { [key: string]: any[] } {
   //   // object: key-value pair
   //   const result: { [key: string]: any[] } = {};
-  
+
   //   for (const columnName of columnNames) {
   //     const values = this.getColumnValues(columnName);
   //     result[columnName] = values;
@@ -180,39 +187,42 @@ export class Page1Component implements OnInit {
       headers: [],
       rows: []
     };
-  
-    result.headers = columnNames;
-  
-    for (const columnName of columnNames) {
-      const values = this.getColumnValues(columnName);
-      result.rows.push(values);
+
+    // Check if csvData is not null before accessing its properties
+    if (this.csvData) {
+      result.headers = columnNames;
+
+      const numRows = this.csvData.rows.length;
+
+      for (let i = 0; i < numRows; i++) {
+        const row: any[] = [];
+        for (const columnName of columnNames) {
+          // Check if headers is not null before using indexOf
+          if (this.csvData.headers) {
+            const columnIndex = this.csvData.headers.indexOf(columnName);
+            // Check if columnIndex is not -1 (meaning the column exists) before accessing the row
+            if (columnIndex !== -1) {
+              row.push(this.csvData.rows[i][columnIndex]);
+            } else {
+              row.push(null); // Handle cases where the column is not found
+            }
+          } else {
+            row.push(null); // Handle cases where headers is null
+          }
+        }
+        result.rows.push(row);
+      }
     }
-  
+
     return result;
   }
-  filteredData = this.getColumnValuesForMultipleColumns(this.combinedFeatureAndTargetVariables)
-  
-  
-  
-  
-  
 
-  isTableVisible = false; 
-  data = [
-    {
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
+  get visibleRows() {
+    const start = (this.pageIndex - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.filteredData!.rows.slice(start, end);
+  }
+
+
+
 }
