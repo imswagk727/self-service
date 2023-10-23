@@ -23,6 +23,7 @@ export class Page1Component implements OnInit {
     //
     listOfSelectedFilterColumn: string; // selected column
     listOfSelectedOperator: string; // selected operator
+    listofSelectableValues: any[];
     listOfSelectedFilterValue: any[]; // selected value
     isNumber: boolean;
     isDiverseNumber: boolean;
@@ -75,6 +76,7 @@ export class Page1Component implements OnInit {
     this.filterGroups.push({
       listOfSelectedFilterColumn: '',
       listOfSelectedOperator: '',
+      listofSelectableValues: [],
       listOfSelectedFilterValue: [],
       isNumber: false,
       isDiverseNumber: false,
@@ -95,20 +97,19 @@ export class Page1Component implements OnInit {
     const selectedColumn = group.listOfSelectedFilterColumn;
 
     // 结果数组
-    const selectedValues = this.getColumnValues(selectedColumn);
-
-    group.listOfSelectedFilterValue = selectedValues;
+    const selectableValues = this.getColumnValues(selectedColumn);
+    group.listofSelectableValues = selectableValues
     console.log('data column:', group.listOfSelectedFilterColumn);
-    console.log('data value:', group.listOfSelectedFilterValue);
-    group.isNumber = this.isNumeric(group.listOfSelectedFilterValue);
+    console.log('data value:', selectableValues);
+    group.isNumber = this.isNumeric(selectableValues);
     group.isDiverseNumber = this.hasMoreThanFiveUniqueNumbers(
-      group.listOfSelectedFilterValue
+      selectableValues
     );
     console.log('isNumber:', group.isNumber);
     console.log('isDiverseNumber:', group.isDiverseNumber);
 
     // Calculate min and max for numeric values
-    const numericValues = selectedValues
+    const numericValues = selectableValues
       .map((value) => parseFloat(value))
       .filter((value) => !isNaN(value));
 
@@ -221,6 +222,10 @@ export class Page1Component implements OnInit {
     const start = (this.pageIndex - 1) * this.pageSize;
     const end = start + this.pageSize;
     return this.filteredData!.rows.slice(start, end);
+  }
+
+  checkFilterGroups() {
+    console.log(this.filterGroups)
   }
 
 

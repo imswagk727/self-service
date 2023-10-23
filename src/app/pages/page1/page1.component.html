@@ -160,7 +160,7 @@
             >
               <nz-option
                 *ngFor="
-                  let item of group.listOfSelectedFilterValue | uniqueValues
+                  let item of group.listofSelectableValues | uniqueValues
                 "
                 [nzLabel]="item"
                 [nzValue]="item"
@@ -176,7 +176,7 @@
             >
               <nz-option
                 *ngFor="
-                  let item of group.listOfSelectedFilterValue | uniqueValues
+                  let item of group.listofSelectableValues | uniqueValues
                 "
                 [nzLabel]="item"
                 [nzValue]="item"
@@ -213,6 +213,7 @@
       nzTooltipPlacement="topLeft"
       [nzTooltipColor]="'red'"
       nz-tooltip
+      (ngModelChange) = "checkFilterGroups()"
     >
     </nz-switch>
     <nz-table
