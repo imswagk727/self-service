@@ -128,7 +128,7 @@
           <nz-select
             nzPlaceHolder="Nothing selected"
             nzAllowClear
-            [(ngModel)]="group.listOfSelectedOperator"
+            [(ngModel)]="group.listOfSelectedFilterOperator"
           >
             <div *ngIf="group.isNumber; else cagtegorical">
               <nz-option
@@ -157,6 +157,8 @@
               nzShowSearch
               nzPlaceHolder="Nothing selected"
               nzAllowClear
+              [(ngModel)]="group.listOfSelectedFilterValue"
+              (ngModelChange)="handleFilterValueChange(group, $event)"
             >
               <nz-option
                 *ngFor="
@@ -173,6 +175,8 @@
               nzShowSearch
               nzPlaceHolder="Nothing selected"
               nzAllowClear
+              [(ngModel)]="group.listOfSelectedFilterValue"
+              (ngModelChange)="handleFilterValueChange(group, $event)"
             >
               <nz-option
                 *ngFor="
@@ -191,6 +195,8 @@
                 'Min: ' + group.minValue + ', Max: ' + group.maxValue
               "
               type="number"
+              [(ngModel)]="group.listOfSelectedFilterValue"
+              (ngModelChange)="handleFilterValueChange(group, $event)"
             />
           </div>
         </div>

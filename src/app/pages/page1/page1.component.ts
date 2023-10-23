@@ -22,8 +22,8 @@ export class Page1Component implements OnInit {
   filterGroups: {
     //
     listOfSelectedFilterColumn: string; // selected column
-    listOfSelectedOperator: string; // selected operator
-    listofSelectableValues: any[];
+    listOfSelectedFilterOperator: string; // selected operator
+    listofSelectableValues: any[]; // available column value for selecting
     listOfSelectedFilterValue: any[]; // selected value
     isNumber: boolean;
     isDiverseNumber: boolean;
@@ -75,7 +75,7 @@ export class Page1Component implements OnInit {
   addFilterGroup() {
     this.filterGroups.push({
       listOfSelectedFilterColumn: '',
-      listOfSelectedOperator: '',
+      listOfSelectedFilterOperator: '',
       listofSelectableValues: [],
       listOfSelectedFilterValue: [],
       isNumber: false,
@@ -225,7 +225,13 @@ export class Page1Component implements OnInit {
   }
 
   checkFilterGroups() {
-    console.log(this.filterGroups)
+    console.log('Filter group:', this.filterGroups)
+  }
+
+  handleFilterValueChange(group: any, selectedValues: any[]): void {
+    // 当前filter value选中或输入的值
+    group.listOfSelectedFilterValue = selectedValues;
+    console.log('Selected Values for group:', selectedValues);
   }
 
 
