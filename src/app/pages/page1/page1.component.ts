@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { filter } from 'rxjs';
 import { CsvDataService } from 'src/app/shared/service/csv-data.service';
 
 @Component({
@@ -224,15 +225,58 @@ export class Page1Component implements OnInit {
     return this.filteredData!.rows.slice(start, end);
   }
 
-  checkFilterGroups() {
-    console.log('Filter group:', this.filterGroups)
-  }
-
   handleFilterValueChange(group: any, selectedValues: any[]): void {
     // 当前filter value选中或输入的值
     group.listOfSelectedFilterValue = selectedValues;
     console.log('Selected Values for group:', selectedValues);
+
+    console.log('Filter group for now:', this.filterGroups)
+    this.filteredData = this.applyFilter(this.filteredData, this.filterGroups)
+    console.log('Filtered data for now', this.filteredData)
   }
+
+  applyFilter(filteredData: { headers: string[], rows: any[][] }, filterGroups: any[]): { headers: string[], rows: any[][] } {
+    if (!filteredData.headers || !filteredData.rows || filteredData.headers.length === 0 || filteredData.rows.length === 0 || !filterGroups || filterGroups.length === 0) {
+      return { headers: [], rows: [] };
+    }
+
+    const filteredRows = filteredData.rows.filter((row) => {
+      return filterGroups.every((filterGroup) => {
+        const columnName = filterGroup.listOfSelectedFilterColumn;
+        const operator = filterGroup.listOfSelectedFilterOperator;
+        const filterValues = filterGroup.listOfSelectedFilterValue;
+
+        const columnIndex = filteredData.headers.indexOf(columnName);
+
+        if (columnIndex === -1) {
+          // No matching column, exclude this row
+          return false;
+        }
+
+        const cellValue = row[columnIndex];
+
+        if (operator === '=') {
+          return filterValues.includes(cellValue);
+        } else if (operator === '!=') {
+          return !filterValues.includes(cellValue);
+        } else if (operator === '>') {
+          return cellValue > filterValues[0];
+        } else if (operator === '<') {
+          return cellValue < filterValues[0];
+        }
+
+
+        // Handle other operators here if needed
+
+        return false;
+      });
+    });
+
+    const filteredHeaders = filteredData.headers;
+
+    return { headers: filteredHeaders, rows: filteredRows };
+  }
+
 
 
 

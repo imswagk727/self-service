@@ -194,7 +194,7 @@
               [placeholder]="
                 'Min: ' + group.minValue + ', Max: ' + group.maxValue
               "
-              type="number"
+              type="string"
               [(ngModel)]="group.listOfSelectedFilterValue"
               (ngModelChange)="handleFilterValueChange(group, $event)"
             />
@@ -219,7 +219,7 @@
       nzTooltipPlacement="topLeft"
       [nzTooltipColor]="'red'"
       nz-tooltip
-      (ngModelChange) = "checkFilterGroups()"
+
     >
     </nz-switch>
     <nz-table
