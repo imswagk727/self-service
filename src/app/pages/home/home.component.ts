@@ -15,11 +15,11 @@ export class HomeComponent {
   // Define pageIndex and pageSize properties for pagination
   pageIndex = 1;
   pageSize = 10;
-  totalItems = 0; 
+  totalItems = 0;
   titleText: string = "";
 
-  constructor(private csvPaserService: CsvParserService, private router: Router, private csvDataService: CsvDataService ) {} // Inject service
-  
+  constructor(private csvPaserService: CsvParserService, private router: Router, private csvDataService: CsvDataService) { } // Inject service
+
 
   get visibleRows() {
     const start = (this.pageIndex - 1) * this.pageSize;
@@ -60,5 +60,5 @@ export class HomeComponent {
   }
 
 
-  
+
 }
