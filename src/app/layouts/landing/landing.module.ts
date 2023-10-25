@@ -10,6 +10,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,18 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
   imports: [
     CommonModule,
     RouterModule,
-    
+
     FormsModule,
     NzLayoutModule,
     NzUploadModule,
     NzTableModule,
     NzDividerModule,
     NzButtonModule,
-    NzEmptyModule
+    NzEmptyModule,
+    NzModalModule,
+    DragDropModule,
+    NzGridModule,
+    NzIconModule
   ]
 })
 export class LandingModule { }
