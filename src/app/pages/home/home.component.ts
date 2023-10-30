@@ -3,7 +3,6 @@ import { CsvParserService } from 'src/app/shared/service/csv-parser.service';
 import { Router } from '@angular/router';
 import { CsvDataService } from 'src/app/shared/service/csv-data.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { CustomRow, CustomColumn } from './shared-interface';
 
 
 @Component({
@@ -13,87 +12,44 @@ import { CustomRow, CustomColumn } from './shared-interface';
 })
 
 export class HomeComponent implements OnInit {
-  listOfData: CustomRow[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      gender: 'female',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      gender: 'female',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      gender: 'male',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
-
-  customColumn: CustomColumn[] = [
-    {
-      name: 'Name',
-      value: 'name',
-      default: true,
-      required: true,
-      position: 'left',
-      width: 200,
-      fixWidth: true
-    },
-    {
-      name: 'Gender',
-      value: 'gender',
-      default: true,
-      width: 200
-    },
-    {
-      name: 'Address',
-      value: 'address',
-      default: true,
-      width: 200
-    },
-    {
-      name: 'Age',
-      value: 'age',
-      default: true,
-      width: 200,
-      required: true,
-      position: 'right',
-    }
-  ];
+  customColumn: any[] = [];
 
   isVisible: boolean = false;
-  title: CustomColumn[] = [];
-  footer: CustomColumn[] = [];
-  fix: CustomColumn[] = [];
-  notFix: CustomColumn[] = [];
+  title: any[] = [];
+  footer: any[] = [];
+  fix: any[] = [];
+  notFix: any[] = [];
+
+  // csvData
+  headers: any[] = [];
+  listOfData: any[] = [];
 
   selectedFile: File | null = null;
   csvData: { headers: string[]; rows: string[][] } | null = null;
   totalItems = 0;
   titleText: string = "";
 
-  constructor(private cdr: ChangeDetectorRef, private csvDataService: CsvDataService, private csvPaserService: CsvParserService) {
+  // Define pageIndex and pageSize properties for pagination
+  pageIndex = 1;
+  pageSize = 10;
+
+
+  constructor(private cdr: ChangeDetectorRef, private csvDataService: CsvDataService, private csvPaserService: CsvParserService, private router: Router) {
     console.log('CsvDataService injected');
   }
 
-  ngOnInit(): void {
-    this.title = this.customColumn.filter(item => item.position === 'left' && item.required);
-    this.footer = this.customColumn.filter(item => item.position === 'right' && item.required);
-    this.fix = this.customColumn.filter(item => item.default && !item.required);
-    this.notFix = this.customColumn.filter(item => !item.default && !item.required);
-
-    this.csvData = this.csvDataService.getCSVData()
+  get visibleRows() {
+    const start = (this.pageIndex - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.csvData!.rows.slice(start, end);
   }
 
-  drop(event: CdkDragDrop<CustomColumn[]>): void {
+  ngOnInit(): void {
+
+
+  }
+
+  drop(event: CdkDragDrop<any[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -110,14 +66,14 @@ export class HomeComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  deleteCustom(value: CustomColumn, index: number): void {
+  deleteCustom(value: any, index: number): void {
     value.default = false;
     this.notFix = [...this.notFix, value];
     this.fix.splice(index, 1);
     this.cdr.markForCheck();
   }
 
-  addCustom(value: CustomColumn, index: number): void {
+  addCustom(value: any, index: number): void {
     value.default = true;
     this.fix = [...this.fix, value];
     this.notFix.splice(index, 1);
@@ -162,8 +118,40 @@ export class HomeComponent implements OnInit {
       this.totalItems = this.csvData?.rows.length || 0; // Set totalItems
       this.titleText = `(Total Rows: ${this.totalItems})`;
 
+      if (this.csvData) {
+        this.headers = this.csvData.headers
+        this.listOfData = this.csvData.rows
+
+        this.customColumn = this.headers.map(header => ({
+          name: header,
+          value: header,
+          default: true,
+          width: 200,
+          // position: 'left', // or right
+          // required: true
+        }));
+      }
+
+      // configure custom column list
+      // this.title = this.customColumn.filter(item => item.position === 'left' && item.required); 
+      // this.footer = this.customColumn.filter(item => item.position === 'right' && item.required); 
+      this.fix = this.customColumn.filter(item => item.default && !item.required);
+      this.notFix = this.customColumn.filter(item => !item.default && !item.required);
+      console.log('customColumn', this.customColumn)
+      console.log('listOfData:', this.listOfData)
+
       //store the data in csv-data service
       this.csvDataService.setCSVData(this.csvData);
     });
+
+    // this.csvData = this.csvDataService.getCSVData()
+
   }
+
+  startAnalysis() {
+    this.router.navigate(['/page1']);
+  }
+
+
+
 }
