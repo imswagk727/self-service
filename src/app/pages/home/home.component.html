@@ -23,6 +23,7 @@
   <nz-table
     #basicTable
     [nzData]="listOfData"
+    [nzLoading]="isLoading"
     [nzCustomColumn]="customColumn"
     nzShowSizeChanger
     [nzTitle]="titleText"
@@ -33,16 +34,25 @@
   >
     <thead>
       <tr>
-        <ng-container *ngFor="let column of customColumn">
-          <th nzCellControl="{{ column.value }}">{{ column.name }}</th>
-        </ng-container>
+        <th
+          *ngFor="let column of customColumn"
+          [nzFilterMultiple]="column.filterMultiple"
+          [nzFilters]="column.listOfFilter"
+          [nzFilterFn]="column.filterFn"
+          nzCellControl="{{ column.value }}"
+        >
+          {{ column.name }}
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of visibleRows">
-        <ng-container *ngFor="let item of row; let i = index">
-          <td [nzCellControl]="customColumn[i].value">{{ item }}</td>
-        </ng-container>
+        <td
+          *ngFor="let item of row; let i = index"
+          [nzCellControl]="customColumn[i].value"
+        >
+          {{ item }}
+        </td>
       </tr>
     </tbody>
   </nz-table>

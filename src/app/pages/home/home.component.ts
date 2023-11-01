@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { CsvDataService } from 'src/app/shared/service/csv-data.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,6 +18,7 @@ export class HomeComponent implements OnInit {
   footer: any[] = [];
   fix: any[] = [];
   notFix: any[] = [];
+  isLoading = true; // Add loading state
 
   // csvData
   headers: any[] = [];
@@ -104,6 +104,9 @@ export class HomeComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true; // Set loading state when uploading
+    this.cdr.markForCheck();
+
     const formData = new FormData();
     formData.append('csvFile', this.selectedFile);
 
@@ -122,6 +125,7 @@ export class HomeComponent implements OnInit {
         this.headers = this.csvData.headers
         this.listOfData = this.csvData.rows
 
+        const firstRow = this.csvData.rows[0];
         this.customColumn = this.headers.map(header => ({
           name: header,
           value: header,
@@ -129,7 +133,13 @@ export class HomeComponent implements OnInit {
           width: 200,
           // position: 'left', // or right
           // required: true
+          listOfFilter: this.generateFilterOptions(header), // Generate filter options
+          // listOfFilter: [],
+          filterFn: null,
+          filterMultiple: true
         }));
+
+
       }
 
       // configure custom column list
@@ -140,12 +150,29 @@ export class HomeComponent implements OnInit {
       console.log('customColumn', this.customColumn)
       console.log('listOfData:', this.listOfData)
 
+      this.isLoading = false; // Turn off loading state when data is loaded
+      this.cdr.markForCheck();
+
       //store the data in csv-data service
       this.csvDataService.setCSVData(this.csvData);
     });
 
     // this.csvData = this.csvDataService.getCSVData()
 
+  }
+
+  generateFilterOptions(columnName: string): any[] {
+    // Extract values from the specified column
+    const columnIndex = this.headers.indexOf(columnName);
+    const columnData = this.listOfData.map(row => row[columnIndex]);
+
+    // Use Set to keep only unique values
+    const uniqueOptions = Array.from(new Set(columnData));
+
+    // Sort the options if needed
+    uniqueOptions.sort();
+
+    return uniqueOptions.map(option => ({ text: option, value: option }));
   }
 
   startAnalysis() {
